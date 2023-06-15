@@ -13,12 +13,12 @@ module Danger
   #
   # @example Ensure people are well warned about merging on Mondays
   #
-  #          my_plugin.warn_on_mondays
+  #          inconvenient_time_pr_checker.warn_on_mondays
   #
   # @see  iangmaia/danger-iantest
   # @tags monday, weekends, time
   #
-  class InconvenientPRTimeChecker < Plugin
+  class InconvenientTimePRChecker < Plugin
     # An attribute that you can read/write from your Dangerfile
     #
     # @return   [Array<String>]

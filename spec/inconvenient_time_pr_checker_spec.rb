@@ -3,18 +3,18 @@
 require File.expand_path('spec_helper', __dir__)
 
 module Danger
-  describe Danger::InconvenientPRTimeChecker do
+  describe Danger::InconvenientTimePRChecker do
     it 'should be a plugin' do
-      expect(Danger::InconvenientPRTimeChecker.new(nil)).to be_a Danger::Plugin
+      expect(Danger::InconvenientTimePRChecker.new(nil)).to be_a Danger::Plugin
     end
 
     describe 'with Dangerfile' do
       before do
         @dangerfile = testing_dangerfile
-        @my_plugin = @dangerfile.inconvenient_pr_time_checker
+        @my_plugin = @dangerfile.inconvenient_time_pr_checker
 
         # mock the PR data
-        json = File.read("#{File.dirname(__FILE__)}/support/fixtures/github_pr.json")
+        json = File.read("#{__dir__}/support/fixtures/github_pr.json")
         allow(@my_plugin.github).to receive(:pr_json).and_return(json)
       end
 

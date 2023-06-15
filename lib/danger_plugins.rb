@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require 'iantest/plugins/inconvenient_pr_time_checker'
+require 'iantest/plugins/inconvenient_time_pr_checker'
