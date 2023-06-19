@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path('spec_helper', __dir__)
+require_relative './spec_helper'
 
 module Danger
   describe Danger::InconvenientTimePRChecker do
