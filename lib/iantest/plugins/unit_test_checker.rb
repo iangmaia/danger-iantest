@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './utils/git_utils'
+require_relative 'utils/git_utils'
 
 module Danger
   # Plugin to detect classes without Unit Tests in a PR.
