@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "RSpec - all",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "~/.rvm/gems/ruby-2.7.4/bin/rspec",
+            "args": [
+                "-I",
+                "${workspaceRoot}"
+            ]
+        },
+        {
+            "name": "RSpec - active spec file only",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "~/.rvm/gems/ruby-2.7.4/bin/rspec",
+            "args": [
+                "-I",
+                "${workspaceRoot}",
+                "${file}"
+            ]
+        }
+    ]
+}
