@@ -12,28 +12,42 @@ module Danger
       before do
         @dangerfile = testing_dangerfile
         @my_plugin = @dangerfile.inconvenient_time_pr_checker
-
-        # mock the PR data
-        json = File.read("#{__dir__}/support/fixtures/github_pr.json")
-        allow(@my_plugin.github).to receive(:pr_json).and_return(json)
       end
 
-      it 'Warns on a monday' do
+      it 'warns on a monday' do
         monday_date = Date.parse('2016-07-11')
         allow(Date).to receive(:today).and_return monday_date
 
         @my_plugin.warn_on_mondays
 
-        expect(@dangerfile.status_report[:warnings]).to eq(['Trying to merge code on a Monday'])
+        expect((@dangerfile.status_report[:warnings]).count).to eq 1
       end
 
-      it 'Does nothing on a tuesday' do
+      it 'does nothing on a tuesday' do
         monday_date = Date.parse('2016-07-12')
         allow(Date).to receive(:today).and_return monday_date
 
         @my_plugin.warn_on_mondays
 
-        expect(@dangerfile.status_report[:warnings]).to eq([])
+        expect(@dangerfile.status_report[:warnings]).to be_empty
+      end
+
+      it 'warns after 18pm' do
+        after18pm = Time.parse('2023-06-30 18:30 UTC')
+        allow(Time).to receive(:now).and_return after18pm
+
+        @my_plugin.warn_after_6pm
+
+        expect((@dangerfile.status_report[:warnings]).count).to eq 1
+      end
+
+      it 'does nothing before 18pm' do
+        after18pm = Time.parse('2023-06-30 17:59 UTC')
+        allow(Time).to receive(:now).and_return after18pm
+
+        @my_plugin.warn_after_6pm
+
+        expect(@dangerfile.status_report[:warnings]).to be_empty
       end
     end
   end

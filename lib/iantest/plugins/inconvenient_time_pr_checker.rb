@@ -35,24 +35,16 @@ module Danger
     # @return   [void]
     #
     def warn_after_6pm
-      warn 'Trying to merge code after 6pm' if cest_current_time.hour >= 18
+      warn 'Trying to merge code after 6pm' if Time.now.utc.hour >= 18
     end
 
     # A method that you can call from your Dangerfile
     # @return   [void]
     #
     def error_friday_6pm
-      current_time = cest_current_time
+      current_time = Time.now.utc
 
       failure 'Trying to merge code Friday after 6pm 🙄' if current_time.friday? && current_time.hour >= 18
-    end
-
-    private
-
-    # Returns the CEST current time
-    #
-    def cest_current_time
-      Time.now.utc.in_time_zone('UTC+2')
     end
   end
 end
