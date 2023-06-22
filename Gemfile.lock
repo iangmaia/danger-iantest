@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     danger-iantest (0.0.1)
-      danger (~> 9.3.0)
+      danger (~> 9.3)
       danger-plugin-api (~> 1.0.0)
 
 GEM
