@@ -3,8 +3,6 @@ warn('Please keep the Pull Request small, breaking it down into multiple ones if
 
 inconvenient_time_pr_checker.warn_after_6pm
 
-manifest_pr_checker.check_gemfile_lock_updated
-
 unit_test_pr_checker.check_missing_tests
 
 view_code_pr_checker.view_changes_need_screenshots
