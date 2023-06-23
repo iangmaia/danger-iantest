@@ -4,7 +4,7 @@ danger.import_plugin(File.join(__dir__, 'lib/iantest/plugins/unit_test_pr_checke
 danger.import_plugin(File.join(__dir__, 'lib/iantest/plugins/view_code_pr_checker.rb'))
 
 if danger.env.danger_id == 'pr-check'
-    danger.import_dangerfile(path: 'dangerfiles/pr-check/Dangerfile')
+    danger.import_dangerfile(path: File.join(__dir__, 'dangerfiles/pr-check/Dangerfile'))
 end
 
 if @iantest_platform == :ios
