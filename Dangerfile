@@ -1,4 +1,4 @@
-danger.import_plugin(File.join(__dir__, 'lib/iantest/plugins/gemfile_pr_checker.rb'))
+danger.import_plugin(File.join(__dir__, 'lib/iantest/plugins/manifest_pr_checker.rb'))
 danger.import_plugin(File.join(__dir__, 'lib/iantest/plugins/inconvenient_time_pr_checker.rb'))
 danger.import_plugin(File.join(__dir__, 'lib/iantest/plugins/unit_test_pr_checker.rb'))
 danger.import_plugin(File.join(__dir__, 'lib/iantest/plugins/view_code_pr_checker.rb'))
@@ -8,7 +8,7 @@ warn('Please keep the Pull Request small, breaking it down into multiple ones if
 
 inconvenient_time_pr_checker.warn_after_6pm
 
-gemfile_pr_checker.check_gemfile_lock_updated
+manifest_pr_checker.check_gemfile_lock_updated
 
 unit_test_pr_checker.check_missing_tests
 
