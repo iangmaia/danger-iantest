@@ -20,7 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'danger', '~> 9.3'
   spec.add_dependency 'danger-swiftlint', '~> 0.29'
-  spec.add_runtime_dependency 'danger-plugin-api', '~> 1.0.0'
+  spec.add_dependency 'danger-xcode_summary', '~> 1.0'
+  spec.add_runtime_dependency 'danger-plugin-api', '~> 1.0'
 
   # General ruby development
   spec.add_development_dependency 'bundler', '~> 2.0'
