@@ -6,7 +6,7 @@ module Danger
   # Plugin to detect classes without Unit Tests in a PR.
   class UnitTestPRChecker < Plugin
     ANY_CLASS_DETECTOR = /class ([A-Z]\w+)\s*(.*?)\s*{/.freeze
-      NON_PRIVATE_CLASS_DETECTOR = /(?:\s|public|internal|protected|final|abstract|static)*class ([A-Z]\w+)\s*(.*?)\s*{/.freeze
+    NON_PRIVATE_CLASS_DETECTOR = /(?:\s|public|internal|protected|final|abstract|static)*class ([A-Z]\w+)\s*(.*?)\s*{/.freeze
 
     # TODO: create a field that can be set from the Dangerfile
     CLASSES_EXCEPTIONS = [
