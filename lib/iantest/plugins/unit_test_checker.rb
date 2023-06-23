@@ -31,11 +31,11 @@ module Danger
 
       if danger.github.pr_labels.include?(UNIT_TESTS_BYPASS_PR_LABEL)
         list.each do |c|
-          warn("Class `#{c}` is missing tests, but `#{UNIT_TESTS_BYPASS_PR_LABEL}` label was set to ignore this.")
+          warn("Class `#{c.classname}` is missing tests, but `#{UNIT_TESTS_BYPASS_PR_LABEL}` label was set to ignore this.")
         end
       else
         list.each do |c|
-          failure("Please add tests for class `#{c}` (or add `#{UNIT_TESTS_BYPASS_PR_LABEL}` label to ignore this).")
+          failure("Please add tests for class `#{c.classname}` (or add `#{UNIT_TESTS_BYPASS_PR_LABEL}` label to ignore this).")
         end
       end
     end
