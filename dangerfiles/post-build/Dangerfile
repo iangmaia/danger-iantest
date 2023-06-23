@@ -1,0 +1,6 @@
+case @iantest_platform
+when :ios
+  warn 'TODO: common post build iOS'
+when :android
+  warn 'TODO: common post build Android'
+end
