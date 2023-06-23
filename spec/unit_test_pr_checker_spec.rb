@@ -3,15 +3,15 @@
 require_relative 'spec_helper'
 
 module Danger
-  describe Danger::UnitTestChecker do
+  describe Danger::UnitTestPRChecker do
     it 'should be a plugin' do
-      expect(Danger::UnitTestChecker.new(nil)).to be_a Danger::Plugin
+      expect(Danger::UnitTestPRChecker.new(nil)).to be_a Danger::Plugin
     end
 
     describe 'with Dangerfile' do
       before do
         @dangerfile = testing_dangerfile
-        @my_plugin = @dangerfile.unit_test_checker
+        @my_plugin = @dangerfile.unit_test_pr_checker
 
         allow(@my_plugin.github).to receive(:pr_labels).and_return(["my_label"])
       end

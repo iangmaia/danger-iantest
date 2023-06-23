@@ -4,7 +4,7 @@ require_relative 'utils/git_utils'
 
 module Danger
   # Plugin to detect classes without Unit Tests in a PR.
-  class UnitTestChecker < Plugin
+  class UnitTestPRChecker < Plugin
     ANY_CLASS_DETECTOR = /class ([A-Z]\w+)\s*(.*?)\s*{/.freeze
       NON_PRIVATE_CLASS_DETECTOR = /(?:\s|public|internal|protected|final|abstract|static)*class ([A-Z]\w+)\s*(.*?)\s*{/.freeze
 
