@@ -8,34 +8,54 @@ module Danger
     ANY_CLASS_DETECTOR = /class ([A-Z]\w+)\s*(.*?)\s*{/.freeze
     NON_PRIVATE_CLASS_DETECTOR = /(?:\s|public|internal|protected|final|abstract|static)*class ([A-Z]\w+)\s*(.*?)\s*{/.freeze
 
-    # TODO: create a field that can be set from the Dangerfile
     CLASSES_EXCEPTIONS = [
       /ViewHolder$/,
       /Module$/,
       /ViewController$/
     ].freeze
 
-    # TODO: create a field that can be set from the Dangerfile
     SUBCLASSES_EXCEPTIONS = [
       /(Fragment|Activity)\b/,
       /RecyclerView/
     ].freeze
 
-    # TODO: create a field that can be set from the Dangerfile
     UNIT_TESTS_BYPASS_PR_LABEL = 'unit-tests-exemption'
 
-    def check_missing_tests
+    attr_accessor :classes_exceptions, :subclasses_exceptions
+
+    # Check and warns about missing unit tests for a Git diff, with optional classes/subclasses to ignore and an optional PR label to bypass the checks.
+    #
+    # @param classes_exceptions [Array<String>] Optional list of classes regexes to exclude from the check.
+    #   Defaults to CLASSES_EXCEPTIONS.
+    # @param subclasses_exceptions [Array<String>] Optional list of subclasses to exclude from the check.
+    #   Defaults to SUBCLASSES_EXCEPTIONS.
+    # @param bypass_label [String] Optional label to indicate we can bypass the check. Defaults to
+    #   UNIT_TESTS_BYPASS_PR_LABEL.
+    # @return [void]
+    #
+    # @example Check missing unit tests
+    #   check_missing_tests()
+    #
+    # @example Check missing unit tests excluding certain classes and subclasses
+    #   check_missing_tests(classes_exceptions: [/ViewHolder$/], subclasses_exceptions: [/RecyclerView/])
+    #
+    # @example Check missing unit tests with a custom bypass label
+    #   check_missing_tests(bypass_label: 'BypassTestCheck')
+    def check_missing_tests(classes_exceptions: CLASSES_EXCEPTIONS, subclasses_exceptions: SUBCLASSES_EXCEPTIONS, bypass_label: UNIT_TESTS_BYPASS_PR_LABEL)
+      @classes_exceptions = classes_exceptions
+      @subclasses_exceptions = subclasses_exceptions
+
       list = find_classes_missing_tests(git_diff: git.diff)
 
       return if list.empty?
 
-      if danger.github.pr_labels.include?(UNIT_TESTS_BYPASS_PR_LABEL)
+      if danger.github.pr_labels.include?(bypass_label)
         list.each do |c|
-          warn("Class `#{c.classname}` is missing tests, but `#{UNIT_TESTS_BYPASS_PR_LABEL}` label was set to ignore this.")
+          warn("Class `#{c.classname}` is missing tests, but `#{bypass_label}` label was set to ignore this.")
         end
       else
         list.each do |c|
-          failure("Please add tests for class `#{c.classname}` (or add `#{UNIT_TESTS_BYPASS_PR_LABEL}` label to ignore this).")
+          failure("Please add tests for class `#{c.classname}` (or add `#{bypass_label}` label to ignore this).")
         end
       end
     end
@@ -84,11 +104,11 @@ module Danger
     # @param [Array<String>] match an array of captured substrings matching our `*_CLASS_DETECTOR` for a given line
     # @param [String] file the path to the file where that class declaration line was matched
     def class_match_is_exception?(match:, file:)
-      return true if CLASSES_EXCEPTIONS.any? { |re| match[0] =~ re }
+      return true if @classes_exceptions.any? { |re| match[0] =~ re }
 
       subclass_regexp = File.extname(file) == '.java' ? /extends ([A-Z]\w+)/ : /\s*:\s*([A-Z]\w+)/
       subclass = match[1].match(subclass_regexp)&.captures&.first
-      SUBCLASSES_EXCEPTIONS.any? { |re| subclass =~ re }
+      @subclasses_exceptions.any? { |re| subclass =~ re }
     end
 
     def test_file?(path:)

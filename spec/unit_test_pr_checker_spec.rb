@@ -94,6 +94,49 @@ module Danger
           expect(@dangerfile.status_report[:errors]).to be_empty
         end
       end
+
+      it 'does not show that a PR with a custom bypass label is missing tests' do
+        changes_dict = {
+          'File1.java' => 'import java.utils.*;\n\n public class Abc { public static void main(String[] args) { println(''); } }',
+          'project/src/androidTest/java/org/test/ToolTest.kt' => 'class ToolTest { void testMethod() {} }',
+          'File2.kt' => 'class Abcdef(name: String) { public void testMe() { println(''); } }'
+        }
+
+        run_in_repo_with_diff(changes_dict: changes_dict) do |git|
+          bypass_label = 'ignore-no-tests'
+
+          allow(@dangerfile.git).to receive(:diff).and_return(git.diff)
+          allow(@my_plugin.github).to receive(:pr_labels).and_return([bypass_label])
+
+          @my_plugin.check_missing_tests(bypass_label: bypass_label)
+
+          expect(@dangerfile.status_report[:errors]).to be_empty
+        end
+      end
+
+      it 'does not show that a PR with custom classes / subclasses patterns are missing tests' do
+        exceptions = [
+          /ViewHelper$/
+        ].freeze
+    
+        subclasses_exceptions = [
+          /BaseViewWrangler/
+        ].freeze
+
+        changes_dict = {
+          'File1.java' => 'import java.utils.*;\n\n public class Abc extends BaseViewWrangler { public static void main(String[] args) { println(''); } }',
+          'project/src/androidTest/java/org/test/ToolTest.kt' => 'class ToolTest { void testMethod() {} }',
+          'File2.kt' => 'class AbcdefViewHelper(name: String) { public void testMe() { println(''); } }'
+        }
+
+        run_in_repo_with_diff(changes_dict: changes_dict) do |git|
+          allow(@dangerfile.git).to receive(:diff).and_return(git.diff)
+
+          @my_plugin.check_missing_tests(classes_exceptions: exceptions, subclasses_exceptions: subclasses_exceptions)
+
+          expect(@dangerfile.status_report[:errors]).to be_empty
+        end
+      end
     end
 
     def run_in_repo_with_diff(changes_dict:)
