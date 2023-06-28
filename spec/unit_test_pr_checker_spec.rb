@@ -13,7 +13,7 @@ module Danger
         @dangerfile = testing_dangerfile
         @my_plugin = @dangerfile.unit_test_pr_checker
 
-        allow(@my_plugin.github).to receive(:pr_labels).and_return(["my_label"])
+        allow(@my_plugin.github).to receive(:pr_labels).and_return(['my_label'])
       end
 
       it 'shows that an Android PR needs tests' do
@@ -118,7 +118,7 @@ module Danger
         exceptions = [
           /ViewHelper$/
         ].freeze
-    
+
         subclasses_exceptions = [
           /BaseViewWrangler/
         ].freeze
@@ -144,21 +144,21 @@ module Danger
         Dir.chdir dir do
           `git init -b master`
 
-          changes_dict.each do |key, value|
+          changes_dict.each do |key, _value|
             file_path = "#{dir}/#{key}"
             FileUtils.mkdir_p(File.dirname(file_path))
-            File.open(file_path, "w") { |f| f.write "Initial #{key} content." }
+            File.open(file_path, 'w') { |f| f.write "Initial #{key} content." }
           end
-    
+
           `git add .`
           `git commit -m "add files"`
 
           # adds changes to the previously commited files to create a diff
           changes_dict.each do |key, value|
-            File.open("#{dir}/#{key}", "w") { |f| f.write(value) }
+            File.open("#{dir}/#{key}", 'w') { |f| f.write(value) }
           end
 
-          g = Git.open(".")
+          g = Git.open('.')
           yield g
         end
       end

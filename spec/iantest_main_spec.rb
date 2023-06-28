@@ -15,7 +15,7 @@ module Danger
       end
 
       it 'returns warnings when the PR body is too small and the number of lines for the PR is too big' do
-        allow(@my_plugin.github).to receive(:pr_body).and_return("hi")
+        allow(@my_plugin.github).to receive(:pr_body).and_return('hi')
         allow(@my_plugin.git).to receive(:lines_of_code).and_return(510)
 
         expect(@my_plugin.inconvenient_time_pr_checker).to receive(:warn_after_6pm)

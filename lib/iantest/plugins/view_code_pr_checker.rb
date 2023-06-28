@@ -7,10 +7,12 @@ module Danger
     VIEW_EXTENSIONS_ANDROID = /(?i)(View|Button)\.(java|kt|xml)$/.freeze
 
     def view_changes_need_screenshots
-      view_files_modified = git.modified_files.any? { |file| VIEW_EXTENSIONS_IOS =~ file || VIEW_EXTENSIONS_ANDROID =~ file }
-      pr_has_screenshots = github.pr_body =~ /https?:\/\/\S*\.(gif|jpg|jpeg|png|svg){1}/
-      pr_has_screenshots = pr_has_screenshots || github.pr_body =~ /!\[(.*?)\]\((.*?)\)/
-      
+      view_files_modified = git.modified_files.any? do |file|
+        VIEW_EXTENSIONS_IOS =~ file || VIEW_EXTENSIONS_ANDROID =~ file
+      end
+      pr_has_screenshots = github.pr_body =~ %r{https?://\S*\.(gif|jpg|jpeg|png|svg){1}}
+      pr_has_screenshots ||= github.pr_body =~ /!\[(.*?)\]\((.*?)\)/
+
       warning = 'View files have been modified, but no screenshot is included in the pull request.'\
                 ' Consider adding one for clarity.'
       warn(warning) if view_files_modified && !pr_has_screenshots

@@ -20,7 +20,7 @@ module Danger
 
         @my_plugin.warn_on_mondays
 
-        expect((@dangerfile.status_report[:warnings]).count).to eq 1
+        expect(@dangerfile.status_report[:warnings].count).to eq 1
       end
 
       it 'does nothing on a tuesday' do
@@ -38,7 +38,7 @@ module Danger
 
         @my_plugin.warn_after_6pm
 
-        expect((@dangerfile.status_report[:warnings]).count).to eq 1
+        expect(@dangerfile.status_report[:warnings].count).to eq 1
       end
 
       it 'does nothing before 18pm' do

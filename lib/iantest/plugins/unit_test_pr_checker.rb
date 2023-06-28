@@ -41,7 +41,8 @@ module Danger
     #
     # @example Check missing unit tests with a custom bypass label
     #   check_missing_tests(bypass_label: 'BypassTestCheck')
-    def check_missing_tests(classes_exceptions: CLASSES_EXCEPTIONS, subclasses_exceptions: SUBCLASSES_EXCEPTIONS, bypass_label: UNIT_TESTS_BYPASS_PR_LABEL)
+    def check_missing_tests(classes_exceptions: CLASSES_EXCEPTIONS, subclasses_exceptions: SUBCLASSES_EXCEPTIONS,
+                            bypass_label: UNIT_TESTS_BYPASS_PR_LABEL)
       @classes_exceptions = classes_exceptions
       @subclasses_exceptions = subclasses_exceptions
 

@@ -19,10 +19,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'danger', '~> 9.3'
+  spec.add_dependency 'danger-junit', '~> 1.0'
   spec.add_dependency 'danger-swiftlint', '~> 0.29'
   spec.add_dependency 'danger-xcode_summary', '~> 1.0'
-  spec.add_dependency 'danger-junit', '~> 1.0'
-  
+
   spec.add_runtime_dependency 'danger-plugin-api', '~> 1.0'
 
   # General ruby development

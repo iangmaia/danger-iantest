@@ -19,7 +19,7 @@ module Danger
       )
     end
 
-    private 
+    private
 
     def check_manifest_lock_updated(file_name:, lock_file_name:, instruction:)
       manifest_modified = git.modified_files.include?(file_name)
